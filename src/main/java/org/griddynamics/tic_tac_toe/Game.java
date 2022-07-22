@@ -1,9 +1,6 @@
 package org.griddynamics.tic_tac_toe;
 
-import org.griddynamics.tic_tac_toe.player.EasyBotPlayer;
-import org.griddynamics.tic_tac_toe.player.HumanPlayer;
-import org.griddynamics.tic_tac_toe.player.MediumBotPlayer;
-import org.griddynamics.tic_tac_toe.player.Player;
+import org.griddynamics.tic_tac_toe.player.*;
 import org.griddynamics.tic_tac_toe.ui.GameTUI;
 import org.griddynamics.tic_tac_toe.ui.GridTUI;
 
@@ -62,6 +59,8 @@ public final class Game {
                 players[i] = new EasyBotPlayer(grid, playerSigns[i]);
             } else if (playerTypes[i] == GameTUI.PlayerType.MEDIUM) {
                 players[i] = new MediumBotPlayer(grid, playerSigns[i], game);
+            } else if (playerTypes[i] == GameTUI.PlayerType.HARD) {
+                players[i] = new HardBotPlayer(grid, playerSigns[i], game, i);
             }
         }
 

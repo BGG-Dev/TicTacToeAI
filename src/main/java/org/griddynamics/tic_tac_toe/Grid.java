@@ -1,29 +1,33 @@
 package org.griddynamics.tic_tac_toe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class Grid {
 
     // Cell matrix
     private final Cell[][] cells;
 
-    // Free cell counter
-    private int freeCellCounter;
+    // Free cell list
+    private final List<Cell> freeCells;
 
     /*
      * Dimension constructor
      */
-    Grid(int dimension) {
+    public Grid(int dimension) {
         // Initializing matrix
         cells = new Cell[dimension][dimension];
 
-        // Initializing cells
+        // Initializing lists
+        freeCells = new ArrayList<>();
+
+        // Initializing cells, adding to freeCells list
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
                 cells[i][j] = new Cell(this, i, j);
+                freeCells.add(cells[i][j]);
             }
         }
-
-        // Initializing free cell counter
-        freeCellCounter = dimension * dimension;
     }
 
     /*
@@ -85,10 +89,17 @@ public final class Grid {
     }
 
     /*
-     * Reduces grid's free cell count by one
+     * Returns list of free cells
      */
-    void reduceFreeCellCount() {
-        this.freeCellCounter--;
+    public List<Cell> getFreeCells() {
+        return this.freeCells;
+    }
+
+    /*
+     * Removes given cell from list of free cells
+     */
+    void removeCellFromFree(Cell cell) {
+        this.freeCells.remove(cell);
     }
 
     /*
@@ -97,6 +108,6 @@ public final class Grid {
      * Otherwise - false
      */
     public boolean isFull() {
-        return this.freeCellCounter == 0;
+        return this.freeCells.size() == 0;
     }
 }

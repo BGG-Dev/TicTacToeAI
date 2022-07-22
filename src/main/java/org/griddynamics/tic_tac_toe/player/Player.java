@@ -55,6 +55,13 @@ public abstract class Player {
     }
 
     /*
+     * Occupied cells getter
+     */
+    List<Cell> getOccupied() {
+        return this.occupied;
+    }
+
+    /*
      * Make move by this player
      * Cell is selected by SelectCell method
      */
@@ -77,7 +84,7 @@ public abstract class Player {
     /*
      * Make move by this player
      * Cell is selected from player's grid
-     by given coords
+     * by given coords
      */
     public void makeMove(int x, int y) {
         Cell selected = this.grid.getCell(x, y);
@@ -86,6 +93,10 @@ public abstract class Player {
         }
     }
 
+    /*
+     * Abstract cell selector
+     * has to be implemented in class children
+     */
     abstract Cell selectCell();
 
     /*

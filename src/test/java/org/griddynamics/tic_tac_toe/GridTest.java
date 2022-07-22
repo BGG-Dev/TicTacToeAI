@@ -28,10 +28,6 @@ public class GridTest {
             }
         }
         assertEquals(g.getDimension(), 3);
-    }
-
-    @Test
-    void gridRowGetterTest() {
-        // Creating new grid
+        assertEquals(g.getFreeCells().size(), 9);
     }
 }
