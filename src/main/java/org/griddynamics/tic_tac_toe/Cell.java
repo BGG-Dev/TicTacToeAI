@@ -64,7 +64,7 @@ public final class Cell {
         this.occupantPlayer = player;
 
         // Reducing grid's free cell count
-        this.grid.reduceFreeCellCount();
+        this.grid.removeCellFromFree(this);
 
         // Returning true
         return true;

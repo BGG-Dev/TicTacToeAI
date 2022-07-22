@@ -38,7 +38,7 @@ public final class MediumBotPlayer extends Player {
     @Override
     protected Cell selectCell() {
         // Printing message
-        BotTUI.printMiddleBotMakeMoveMessage();
+        BotTUI.printMediumBotMakeMoveMessage();
 
         // Placing this player on first position in queue
         LinkedList<Player> playersWithThisAsFirst = new LinkedList<>(Arrays.asList(game.getPlayers()));
