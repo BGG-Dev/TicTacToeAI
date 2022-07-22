@@ -2,20 +2,19 @@ package org.griddynamics.tic_tac_toe.ui;
 
 import org.griddynamics.tic_tac_toe.Cell;
 import org.griddynamics.tic_tac_toe.Grid;
-import org.griddynamics.tic_tac_toe.player.Player;
 
 import java.util.Scanner;
 
 /*
  * TUI for Cell and Grid classes
  */
-public final class GridCellGameTUI {
+public final class GridTUI {
 
     // Scanner for stdin
     private static final Scanner scanIn = new Scanner(System.in);
 
     // String to represent free cell on grid
-    private static final String CELL_FREE_SIGN = "_";
+    private static final String CELL_FREE_SIGN = " ";
 
     // Upper-lower grid border part
     private static final String GRID_UPPER_LOWER_BORDER_PART = "---";
@@ -41,7 +40,7 @@ public final class GridCellGameTUI {
     /*
      * grid instance human string representation
      */
-    public static void gridHumanStringRepresentation(Grid grid) {
+    public static void printGrid(Grid grid) {
         // Creating actual upper-lower grid border
         String gridUpperLowerBorder = GRID_UPPER_LOWER_BORDER_PART.repeat(grid.getDimension());
 
@@ -70,20 +69,6 @@ public final class GridCellGameTUI {
         sb.append(gridUpperLowerBorder);
 
         // Printing
-        System.out.println(sb.toString());
-    }
-
-    /*
-     * Returns win end string
-     */
-    public static void winEnd(Player winner) {
-        System.out.println(winner.getSign() + " wins");
-    }
-
-    /*
-     * Returns draw end string
-     */
-    public static void drawEnd() {
-        System.out.println("draw");
+        System.out.println(sb);
     }
 }

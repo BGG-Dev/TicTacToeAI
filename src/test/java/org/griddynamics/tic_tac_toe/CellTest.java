@@ -2,7 +2,7 @@ package org.griddynamics.tic_tac_toe;
 
 import org.griddynamics.tic_tac_toe.player.HumanPlayer;
 
-import org.griddynamics.tic_tac_toe.ui.GridCellGameTUI;
+import org.griddynamics.tic_tac_toe.ui.GridTUI;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +28,7 @@ class CellTest {
 
         // Printing grid
         System.out.println("Grid (after occupation):");
-        GridCellGameTUI.gridHumanStringRepresentation(g);
+        GridTUI.printGrid(g);
 
         // Asserting
         assertTrue(occupationResult);
@@ -51,7 +51,7 @@ class CellTest {
 
         // Printing grid
         System.out.println("Grid (after occupation):");
-        GridCellGameTUI.gridHumanStringRepresentation(g);
+        GridTUI.printGrid(g);
 
         // Asserting
         assertTrue(occupationResult);
@@ -65,7 +65,7 @@ class CellTest {
 
         // Printing grid
         System.out.println("Grid (2nd failed occupation attempt):");
-        GridCellGameTUI.gridHumanStringRepresentation(g);
+        GridTUI.printGrid(g);
 
         // Asserting
         assertFalse(occupationResult);
@@ -76,7 +76,7 @@ class CellTest {
 
         // Printing grid
         System.out.println("Grid (final):");
-        GridCellGameTUI.gridHumanStringRepresentation(g);
+        GridTUI.printGrid(g);
 
         // Asserting
         assertTrue(occupationResult);

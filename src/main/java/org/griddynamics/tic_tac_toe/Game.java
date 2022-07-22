@@ -1,8 +1,8 @@
 package org.griddynamics.tic_tac_toe;
 
-import org.griddynamics.tic_tac_toe.player.HumanPlayer;
-import org.griddynamics.tic_tac_toe.player.Player;
-import org.griddynamics.tic_tac_toe.ui.GridCellGameTUI;
+import org.griddynamics.tic_tac_toe.player.*;
+import org.griddynamics.tic_tac_toe.ui.GameTUI;
+import org.griddynamics.tic_tac_toe.ui.GridTUI;
 
 /*
  * Game class
@@ -35,19 +35,44 @@ public final class Game {
 
     /*
      * Static method
-     * to create game with 2 human players
+     * to create 3x3 game with 2 outside-specified
+     * players. Players are defined by string names
      */
-    public static Game create2Human() {
+    public static Game create2User3x3(GameTUI.PlayerType player1Type,
+                                      GameTUI.PlayerType player2Type) {
         // Creating new grid
         Grid grid = new Grid(3);
 
         // Creating players
-        Player[] p = new Player[2];
-        p[0] = new HumanPlayer(grid, 'X');
-        p[1] = new HumanPlayer(grid, 'O');
+        Player[] players = new Player[2];
 
-        // Returning game instance
-        return new Game(grid, p);
+        // Creating game instance
+        Game game = new Game(grid, players);
+
+        // Initializing players
+        GameTUI.PlayerType[] playerTypes = { player1Type, player2Type };
+        char[] playerSigns = { 'X', 'O' };
+        for (int i = 0; i < players.length; i++) {
+            if (playerTypes[i] == GameTUI.PlayerType.USER) {
+                players[i] = new HumanPlayer(grid, playerSigns[i]);
+            } else if (playerTypes[i] == GameTUI.PlayerType.EASY) {
+                players[i] = new EasyBotPlayer(grid, playerSigns[i]);
+            } else if (playerTypes[i] == GameTUI.PlayerType.MEDIUM) {
+                players[i] = new MediumBotPlayer(grid, playerSigns[i], game);
+            } else if (playerTypes[i] == GameTUI.PlayerType.HARD) {
+                players[i] = new HardBotPlayer(grid, playerSigns[i], game, i);
+            }
+        }
+
+        // Returning game
+        return game;
+    }
+
+    /*
+     * players getter
+     */
+    public Player[] getPlayers() {
+        return this.players;
     }
 
     /*
@@ -60,7 +85,7 @@ public final class Game {
             // Cycling though players
             for (Player current : this.players) {
                 // Printing grid
-                GridCellGameTUI.gridHumanStringRepresentation(grid);
+                GridTUI.printGrid(grid);
 
                 // Current player makes move
                 current.makeMove();
@@ -69,16 +94,14 @@ public final class Game {
                 state = this.calcGameState(current);
 
                 switch (state) {
-                    case WIN -> {
-                        GridCellGameTUI.gridHumanStringRepresentation(grid);
-                        GridCellGameTUI.winEnd(current);
+                    case WIN:
+                        GridTUI.printGrid(grid);
+                        GameTUI.printWinEnd(current);
                         return;
-                    }
-                    case DRAW -> {
-                        GridCellGameTUI.gridHumanStringRepresentation(grid);
-                        GridCellGameTUI.drawEnd();
+                    case DRAW:
+                        GridTUI.printGrid(grid);
+                        GameTUI.printDrawEnd();
                         return;
-                    }
                 }
             }
         }

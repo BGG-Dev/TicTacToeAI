@@ -2,7 +2,7 @@ package org.griddynamics.tic_tac_toe;
 
 import org.griddynamics.tic_tac_toe.player.HumanPlayer;
 
-import org.griddynamics.tic_tac_toe.ui.GridCellGameTUI;
+import org.griddynamics.tic_tac_toe.ui.GridTUI;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,7 +39,7 @@ public class PlayerTest {
         hp.makeMove(0, 2);
 
         // Printing
-        GridCellGameTUI.gridHumanStringRepresentation(grid);
+        GridTUI.printGrid(grid);
 
         // Asserting
         assertTrue(hp.isWinner());
@@ -59,7 +59,7 @@ public class PlayerTest {
         hp.makeMove(2, 1);
 
         // Printing
-        GridCellGameTUI.gridHumanStringRepresentation(grid);
+        GridTUI.printGrid(grid);
 
         // Asserting
         assertTrue(hp.isWinner());
@@ -79,7 +79,7 @@ public class PlayerTest {
         hp1.makeMove(2, 2);
 
         // Printing
-        GridCellGameTUI.gridHumanStringRepresentation(grid);
+        GridTUI.printGrid(grid);
 
         // Asserting
         assertTrue(hp1.isWinner());
@@ -99,7 +99,7 @@ public class PlayerTest {
         hp1.makeMove(2, 0);
 
         // Printing
-        GridCellGameTUI.gridHumanStringRepresentation(grid);
+        GridTUI.printGrid(grid);
 
         // Asserting
         assertTrue(hp1.isWinner());
@@ -114,7 +114,7 @@ public class PlayerTest {
         HumanPlayer hp = new HumanPlayer(grid, 'a');
 
         // Printing
-        GridCellGameTUI.gridHumanStringRepresentation(grid);
+        GridTUI.printGrid(grid);
 
         // Asserting
         assertFalse(hp.isWinner());
@@ -135,7 +135,7 @@ public class PlayerTest {
         hp.makeMove(2, 2);
 
         // Printing
-        GridCellGameTUI.gridHumanStringRepresentation(grid);
+        GridTUI.printGrid(grid);
 
         // Asserting
         assertTrue(hp.isWinner());
@@ -162,7 +162,7 @@ public class PlayerTest {
         hp1.makeMove(2, 1);
 
         // Printing
-        GridCellGameTUI.gridHumanStringRepresentation(grid);
+        GridTUI.printGrid(grid);
 
         // Asserting
         assertFalse(hp1.isWinner());
@@ -181,7 +181,7 @@ public class PlayerTest {
         hp.makeMove(1, 1);
 
         // Printing
-        GridCellGameTUI.gridHumanStringRepresentation(grid);
+        GridTUI.printGrid(grid);
 
         // Asserting
         assertEquals(grid.getCell(1, 1).getOccupantPlayer(), hp);
@@ -190,7 +190,7 @@ public class PlayerTest {
         hp.makeMove(1, 1);
 
         // Printing
-        GridCellGameTUI.gridHumanStringRepresentation(grid);
+        GridTUI.printGrid(grid);
 
         // Asserting
         assertEquals(grid.getCell(1, 1).getOccupantPlayer(), hp);

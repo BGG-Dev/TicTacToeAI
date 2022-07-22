@@ -20,28 +20,36 @@ public final class HumanPlayer extends Player {
      * Implementing selectCellToOccupy for HumanPlayer
      */
     @Override
-    protected Cell selectFreeCell() {
+    protected Cell selectCell() {
         // While user does not select free cell
         int[] coords;
         while (true) {
             // Getting coords from user
             coords = HumanPlayerTUI.getCoordsFromUser();
 
-            // Checking coords for being in bounds
-            if (coords[0] >= getGrid().getDimension() || coords[1] >= getGrid().getDimension()) {
-                HumanPlayerTUI.showCoordOutOfBoundError();
-                continue;
-            }
-
-            // Checking for free
-            if (this.getGrid().getCell(coords[0], coords[1]).getOccupantPlayer() == null) {
-                // Success -> return
+            // Processing coords
+            if (!this.areCoordsInBounds(coords)) {
+                // Coords are not in bounds
+                HumanPlayerTUI.printCoordOutOfBoundError(this.getGrid().getDimension());
+            } else if (this.getGrid().getCell(coords[0], coords[1]).getOccupantPlayer() == null) {
+                // Cell is free, can return
                 return this.getGrid().getCell(coords[0], coords[1]);
             } else {
-                // Failure -> show warning
-                HumanPlayerTUI.showOccupiedCellCaptureWarning();
-                continue;
+                // Cell is already occupied -> show warning
+                HumanPlayerTUI.printOccupiedCellCaptureWarning();
             }
         }
+    }
+
+    /*
+     * Checks if coords are in bounds
+     */
+    private boolean areCoordsInBounds(int[] coords) {
+        for (int coord : coords) {
+            if (coord < 0 || coord >= this.getGrid().getDimension()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

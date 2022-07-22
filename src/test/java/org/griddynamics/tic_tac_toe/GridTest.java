@@ -1,6 +1,6 @@
 package org.griddynamics.tic_tac_toe;
 
-import org.griddynamics.tic_tac_toe.ui.GridCellGameTUI;
+import org.griddynamics.tic_tac_toe.ui.GridTUI;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -16,7 +16,7 @@ public class GridTest {
         Grid g = new Grid(3);
 
         // Printing grid
-        GridCellGameTUI.gridHumanStringRepresentation(g);
+        GridTUI.printGrid(g);
 
         // Asserting
         for (int i = 0; i < 3; i++) {
@@ -28,5 +28,6 @@ public class GridTest {
             }
         }
         assertEquals(g.getDimension(), 3);
+        assertEquals(g.getFreeCells().size(), 9);
     }
 }

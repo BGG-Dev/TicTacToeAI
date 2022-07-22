@@ -55,12 +55,24 @@ public abstract class Player {
     }
 
     /*
+     * Occupied cells getter
+     */
+    List<Cell> getOccupied() {
+        return this.occupied;
+    }
+
+    /*
      * Make move by this player
      * Cell is selected by SelectCell method
      */
     public void makeMove() {
         // Selecting cell to make move with
-        Cell selected = this.selectFreeCell();
+        Cell selected = this.selectCell();
+
+        // Checking for null
+        if (selected == null) {
+            return;
+        }
 
         // Occupying
         selected.occupyByPlayer(this);
@@ -72,7 +84,7 @@ public abstract class Player {
     /*
      * Make move by this player
      * Cell is selected from player's grid
-     by given coords
+     * by given coords
      */
     public void makeMove(int x, int y) {
         Cell selected = this.grid.getCell(x, y);
@@ -81,7 +93,11 @@ public abstract class Player {
         }
     }
 
-    abstract Cell selectFreeCell();
+    /*
+     * Abstract cell selector
+     * has to be implemented in class children
+     */
+    abstract Cell selectCell();
 
     /*
      * Checks if player has won
@@ -92,40 +108,80 @@ public abstract class Player {
             return false;
         }
 
+        // Checking
+        return ((checkForRowWinWithout(0) != -1)          ||
+                (checkForColumnWinWithout(0) != -1)       ||
+                (checkForMainDiagonalWinWithout(0) != -1) ||
+                (checkForAdditionalDiagonalWinWithout(0) != -1));
+    }
+
+    /*
+     * Package-private checker for row win
+     * Returns index of winning row,
+     * if no row, returns -1
+     */
+    final int checkForRowWinWithout(int countToIgnore) {
         // Check for row win
         for (int current: xCoordSet) {
             if (occupied.stream().
-                         filter(e -> e.getX() == current).
-                         count() == grid.getDimension()) {
-                return true;
+                    filter(e -> e.getX() == current).
+                    count() == grid.getDimension() - countToIgnore) {
+                return current;
             }
         }
 
+        // No success -> -1
+        return -1;
+    }
+
+    /*
+     * Package-private checker for column win
+     * Returns index of winning column,
+     * if no column, returns -1
+     */
+    final int checkForColumnWinWithout(int countToIgnore) {
         // Check for column win
         for (int current: yCoordSet) {
             if (occupied.stream().
-                         filter(e -> e.getY() == current).
-                         count() == grid.getDimension()) {
-                return true;
+                    filter(e -> e.getY() == current).
+                    count() == grid.getDimension() - countToIgnore) {
+                return current;
             }
         }
 
+        // No success -> -1
+        return -1;
+    }
+
+    /*
+     * Package-private checker for main diagonal win
+     * Returns 1, if win
+     * Else -1
+     */
+    final int checkForMainDiagonalWinWithout(int countToIgnore) {
         // Check for main diagonal win
         if (occupied.stream().
-                filter(e -> e.getX() == e.getY()).
-                count() == grid.getDimension()) {
-            return true;
+                     filter(e -> e.getX() == e.getY()).
+                     count() == grid.getDimension() - countToIgnore) {
+            return 1;
+        } else {
+            return -1;
         }
+    }
 
+    /*
+     * Package-private checker for
+     * main diagonal win
+     */
+    final int checkForAdditionalDiagonalWinWithout(int countToIgnore) {
         // Check for additional diagonal win
         if (occupied.stream().
                 filter(e -> e.getX() == (grid.getDimension() - 1) - e.getY()).
-                count() == grid.getDimension()) {
-            return true;
+                count() == grid.getDimension() - countToIgnore) {
+            return 1;
+        } else {
+            return -1;
         }
-
-        // Otherwise - false
-        return false;
     }
 
     /*

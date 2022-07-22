@@ -8,29 +8,44 @@ import java.util.Scanner;
  */
 public final class HumanPlayerTUI {
 
+    // Coordinates input request
+    private static final String COORD_INPUT_REQUEST = "Enter the coordinates: ";
+
+    // Wrong input warning
+    private static final String WRONG_INPUT_WARNING = "You should enter numbers!";
+
+    // Coords out of bounds warning
+    private static final String COORDS_OUT_OF_BOUNDS_WARNING = "Coordinates should be from 1 to %d!\n";
+    // Occupied cell warning
+    private static final String OCCUPATED_CELL_WARNING = "This cell is occupied! Choose another one!";
+
     // Scanner for stdin
     private static final Scanner scanIn = new Scanner(System.in);
 
     // Regex to get coords from user
-    private static final String COORDS_REGEX = "[0123456789]+ [0123456789]+";
+    private static final String COORDS_REGEX = "\\d+ \\d+";
 
     /*
      * Gets cell coordinates from player
      */
     public static int[] getCoordsFromUser() {
+        //scanIn.useDelimiter("\n");
         String buff;
         while (true) {
             // Printing message
-            System.out.println("Enter coords | x y:");
+            System.out.print(COORD_INPUT_REQUEST);
 
             // Getting input
             buff = scanIn.nextLine();
 
             // Checking for regex
             if (buff.matches(COORDS_REGEX)) {
-                return Arrays.stream(buff.split(" ")).mapToInt(Integer::parseInt).toArray();
+                return Arrays.stream(buff.split(" ")).
+                              mapToInt(Integer::parseInt).
+                              map(e -> e - 1).
+                              toArray();
             } else {
-                System.out.println("Wrong input format");
+                System.out.println(WRONG_INPUT_WARNING);
             }
         }
     }
@@ -38,14 +53,14 @@ public final class HumanPlayerTUI {
     /*
      * Shows coord out of bound error
      */
-    public static void showCoordOutOfBoundError() {
-        System.out.println("Coords are out of grid dimension");
+    public static void printCoordOutOfBoundError(int dimension) {
+        System.out.printf(COORDS_OUT_OF_BOUNDS_WARNING, dimension);
     }
 
     /*
      * Shows occupied cell warning
      */
-    public static void showOccupiedCellCaptureWarning() {
-        System.out.println("The cell has already been taken by other player");
+    public static void printOccupiedCellCaptureWarning() {
+        System.out.println(OCCUPATED_CELL_WARNING);
     }
 }
